@@ -1,0 +1,57 @@
+HTTP response status code indicate about the like request has completed succesfully
+
+
+Informational response (100-199);
+ 
+Successful Response (200-299) -->;
+ 200 (ok)
+ 201(post) --> created
+
+Redirection Message (300-399)
+
+Client error responses (400-499)-->
+400(Bad request)
+401(unauthorized)
+403(forbidden)
+404(not-found)
+server error responses (500-599)
+
+200
+201
+
+400
+401
+404
+
+
+500
+503
+
+
+project 
+
+
+product 
+
+
+add 
+POST /product 
+
+read 
+GET /product 
+GET /product/id 
+/product/1 
+/product/2
+edit 
+PUT /product/id 
+
+delete 
+DELETE /product/id
+
+
+
+product 
+ model 
+    property 
+     id,name,describtion,price,category,sizes,imageUrl,
+ 
