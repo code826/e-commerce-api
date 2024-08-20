@@ -66,3 +66,34 @@ product
 //route /product/filter --.get request 
 //queryParameter:minPrice,maxPrice,categories:[]
 //response : all the product matching with the filters
+
+  // minPrice : -1;
+  // maxPrice : 10e5
+  //categories: [];
+  //
+
+// authentication and authorizations  
+// user --. customer,admin
+ // add a product (admin)
+ // rate a product (customer,admin)
+ // get product (no authentication required)
+ // filter (no authentication)
+ //edit (admin)
+ //order (customer,admin)
+
+ authentication : 
+  to  identify who the user is
+
+request --> user_2 (authentication)
+DB :
+ user_1,user_2,user_3
+
+ //authorizations :
+  // access to resources or pages 
+
+
+//authentication
+  //username , password
+  //headers
+  //if user exist req.user = user 
+  //return error  

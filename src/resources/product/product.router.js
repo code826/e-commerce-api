@@ -1,5 +1,6 @@
 import express from 'express';
 import ProductController from './product.controller.js';
+import basicAuthorizer from '../../middlewares/basicAuthorizer.js';
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.get('/:id',productController.getProductWithId);
 
 
 //post 
-router.post('/',productController.addProduct);
+router.post('/',basicAuthorizer, productController.addProduct);
 
 
 
