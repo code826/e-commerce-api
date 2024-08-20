@@ -55,3 +55,14 @@ product
     property 
      id,name,describtion,price,category,sizes,imageUrl,
  
+//filter 
+ // [p1,p2,p3,p4]
+   //prices,categories
+   //minprice and max price 
+   //categories : [] 
+
+//client : minPrices,maxPrices categories:[]
+
+//route /product/filter --.get request 
+//queryParameter:minPrice,maxPrice,categories:[]
+//response : all the product matching with the filters

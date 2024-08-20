@@ -43,6 +43,18 @@ export default class ProductModel {
         products.push(product);
         return product;
     }
+    //make sure  all three params are present
+    
+    static productFilter(minPrice,maxPrice,category){
+        let products = this.getAllProducts();
+        let result  = products.filter((item) =>{
+            if(item.price >= minPrice && item.price <= maxPrice && item.category === category){
+                return true;
+            }
+            return false;
+        }) 
+        return result;
+    }
 }
 
 

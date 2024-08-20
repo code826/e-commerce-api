@@ -11,11 +11,17 @@ const productController = new ProductController();
 router.get('/',productController.getAllProducts);
 
 // /product/1
+// product/1
+//product/filter
+router.get('/filter',productController.filterProduct);
+
 router.get('/:id',productController.getProductWithId);
 
 
 //post 
 router.post('/',productController.addProduct);
+
+
 
 //put
 
