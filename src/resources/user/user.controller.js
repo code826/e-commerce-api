@@ -1,6 +1,9 @@
 import validator from "validator";
 import UserModel from "./user.model.js";
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken';
 
+//dotenv.config();
 export default class UserController{
     //register
     register(req,res){
@@ -75,9 +78,22 @@ export default class UserController{
                     message:'Email/Password Is Not Valid'
                 });
             }
+            //headers 
+            //payload
+            //secret key ="asgdksfdk"
+            //let token = 
+          //  process.env.SECRET_KEY
+            let payloadData = {
+                email:user.email,
+                name:user.name
+            }
+            let secretKey = "sgdjhsdghsd##$";
+
+            let token = jwt.sign(payloadData,secretKey,{expiresIn:500});
+            
             return res.status(200).json({
                 success:true,
-                data:'Login Success'
+                token:token
             })
             
         } catch (error) {

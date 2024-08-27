@@ -97,3 +97,97 @@ DB :
   //headers
   //if user exist req.user = user 
   //return error  
+
+//basic authentication 
+ // you need to store your password 
+ // no encryption --> encoding (base64) --> public alogorithm --> easily decode
+ //
+
+ JWT --> JSON web token
+//data store --> JSON  --> token 
+JWT --> it is a token based authentication which create token instead of using your credentials
+It is stateless , scalable , easy to implement
+A JWT is composed of three parts, each separated by a dot (.):
+
+Header: Contains metadata about the token, such as the type of token (JWT) and the hashing algorithm used (e.g., HMAC SHA256 or RSA).
+
+Payload: Contains the claims, which are the statements about an entity (typically, the user) and additional data. For example, the payload might include user ID, username, and expiration time of the token.
+
+Signature: Ensures that the token hasn't been altered. It is created by taking the encoded header, encoded payload, and a secret key, and then hashing them together using the algorithm specified in the header.
+
+
+hashing 
+ Hashing_algorithm(
+    base64-ecoding(header)
+    +base64-encoding(payload)
+    +secret
+ )
+
+ signature
+
+
+ //step 1 :
+  login with credentials 
+    if credentials is right i will generate the token;
+
+  add product 
+   i will the sent the token and token will verify  
+
+
+https://swagger.io/docs/specification/about/
+
+
+rate a product
+
+{
+  product_id:-1,
+  user_id:3,
+  rating:2
+}
+
+// inserting 
+  // first i will check the user that user exist or not 
+  // second i will check the product that product exist
+  // duplicate exist we will overwrite otherwise create new entry
+  // enter
+[
+ {
+  userId:2,
+  rating:4 
+ }
+]
+
+{
+  name:
+  ratings:[{userId:1,rating:4},{userId:3,rating:15}];
+
+
+}
+
+userId:1 
+rating4
+
+3 - 5 minutes
+cart 
+ /ecommerce website 
+ model for cart 
+  properties 
+
+
+routes 
+ POST /cart 
+ DELETE /cart/:id
+ PUT /cart/:id?qty=10
+ GET /cart
+
+//authentication : yes (userId) --> the person who has done the login 
+//POST /cart 
+ // {qty,product_id} -->  
+    validation 
+      product Id is valid or not 
+      userId is valid or not 
+      qty is valid or not
+      all sum up qty of the product should be less than total_qty
+
+
+
