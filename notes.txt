@@ -191,3 +191,23 @@ routes
 
 
 
+public key : 6254fe0616c07ecad3e7bae9c76b2b8f
+private key: c6adce16a7404d169aceb135d71604fee2dff253
+
+
+for using swagger you need following packages
+  swagger-ui-express --> package
+  npm i swagger-ui-express --D
+  npm i swagger-jsdoc --D
+
+  annotation
+  Ctrl+D  -> multiselect
+  shift+alt+down--> just create the new 
+  shift+alt+down--> just create the new 
+
+
+https://marketplace.visualstudio.com/items?itemName=ajmnz.swagger-jsdoc-indent
+https://swagger.io/docs/specification/about/
+//first
+
+   

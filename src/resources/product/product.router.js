@@ -6,39 +6,155 @@ import jwtAuth from "../../middlewares/jwtTokenAuthorization.js";
 const router = express.Router();
 
 const productController = new ProductController();
+/**
+ * @openapi
+ * /api/product/test:
+ *   get:
+ *     summary: Just Testing The Product API
+ *     description: Prdouct API testing
+ *     responses:
+ *       200:
+ *            description: Success
+ *       400:
+ *            description: Failed-Bad Authrorization
+ *       401:
+ *            description: Failed-Bad Request
+ *       404:
+ *            description: Failed-Page Not Found
+ *       404:
+ *            description: Failed-Server error
+ */
+
+/**
+ * specs for test
+  * @openapi
+  * /api/product/test:
+
+  *   get:
+
+  *     summary: Just Testing The Product API
+
+  *     description: Prdouct API testing
+
+  *     responses:
+
+  *       200:
+
+  *         description: Success
+
+  *       400:
+
+  *         description: Failed-Bad Authrorization
+
+  *       401:
+
+  *         description: Failed-Bad Request
+
+  *       404:
+
+  *         description: Failed-Page Not Found
+
+  *       500:
+
+  *         description: Failed-Server error
+ */
+router.get("/test", productController.testProduct);
+
 //product/id --> get,put,delete
 //product --> get ,post
 
 ///product/
-
 /**
- * @swagger
- * /api/product:
- *   get:
- *     summary: Get All Products
- *     description: Retrieve a list of all products.
- *     responses:
- *       200:
- *         description: A list of products.
- *       400:
- *         description: Bad Request
- *       401:
- *         description: Unauthorized
- *       500:
- *         description: Server Error
+ *  specs for get products
+  * @openapi
+  * /api/product:
+
+  *   get:
+
+  *     summary: Get All Product
+
+  *     description: API To Get All The Product
+
+  *   responses:
+
+  *     200:
+
+  *       description: Success
+
+  *     400:
+
+  *       description: bad request
+
+  *     401:
+
+  *       description: bad authroization
+
+  *     500:
+
+  *       description: server error
  */
+
 router.get("/", productController.getAllProducts);
 
-// /product/1
-// product/1
-//product/filter
+/**
+ * 
+ * @openapi
+ * /api/filter:
+
+ *   get:
+
+ *     parameters:
+
+ *       - in: query
+
+ *         name: minPrice
+
+ *         type: integer
+
+ *         description: Min Pric Filter
+
+ *       - in: query
+
+ *         name: maxPrice
+
+ *         type: integer
+
+ *         description: Max Pric Filter
+
+ *       - in: query
+
+ *         name: category
+
+ *         type: string
+
+ *         description: Category
+
+ *     responses:
+
+ *       200:
+
+ *         description: All Good
+
+ *       400:
+
+ *         description: Very Bad
+
+ *       401:
+
+ *         description: Bad
+
+ *       500:
+
+ *         description: Server Error
+ */
+
 router.get("/filter", productController.filterProduct);
 
 /**
- * @swagger
+ * @openapi
  * /api/product/{id}:
  *   get:
- *     summary: Get Product For Id
+ *     summary: It Will Return The Prdouct With Id You Provided
  *     description: Product Information For Id
  *     parameters:
  *       - in: path
@@ -152,8 +268,6 @@ router.get("/:id", productController.getProductWithId);
  *         description: Server error. Unable to create product.
  */
 router.post("/", jwtAuth, productController.addProduct);
-
-//put
 
 router.put("/:id", (req, res) => {
   return res.status(200).json({
