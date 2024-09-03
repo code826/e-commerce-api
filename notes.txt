@@ -211,3 +211,30 @@ https://swagger.io/docs/specification/about/
 //first
 
    
+
+   //express
+   //cors
+   //jwt 
+   //multer
+   //validator
+   //uuid 
+   //moment
+   //.env
+
+
+   model for comments 
+   {
+    id:
+    created_at:2024-10-10 12:00:00
+    updated_at:
+    text:
+    user_id:
+    post_id:
+   }
+  like = {
+    id:1,
+    user_id:5,
+    post_id:7,
+    created_at:moment().format('YYYY-MM-DD HH:mm:ss');
+
+   }

@@ -2,59 +2,82 @@
 
 import validator from "validator";
 import ProductModel from "./product.model.js";
+import { ApplicationError } from "../../applicationError.js";
 
 export default class ProductController {
   getAllProducts(req, res) {
-    try {
-      let products = ProductModel.getAllProducts();
-      return res.status(200).json({
-        success: true,
-        data: products,
-      });
-    } catch (error) {
-      console.log("error", error);
-      return res.status(500).json({
-        success: false,
-        message: "Internal Server Error",
-      });
-    }
+    // try {
+    //   let products = ProductModel1.getAllProducts();
+    //   return res.status(200).json({
+    //     success: true,
+    //     data: products,
+    //   });
+    // } catch (error) {
+    //   console.log("error", error);
+    //   return res.status(500).json({
+    //     success: false,
+    //     message: "Internal Server Error",
+    //   });
+    // }
+    let products = ProductModel1.getAllProducts();
+    return res.status(200).json({
+      success: true,
+      data: products,
+    });
   }
 
   getProductWithId(req, res) {
     //get the data
     console.log("hello");
 
-    try {
-      let { id } = req.params;
-      //validate the data
-      id = Number(id);
+    // try {
+    //   let { id } = req.params;
+    //   //validate the data
+    //   id = Number(id);
 
-      if (Number.isNaN(id)) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid Product Id",
-        });
-      }
+    //   if (Number.isNaN(id)) {
+    //     return res.status(400).json({
+    //       success: false,
+    //       message: "Invalid Product Id",
+    //     });
+    //   }
 
-      let product = ProductModel.getProductWithId(id);
-      if (!product) {
-        return res.status(400).json({
-          success: false,
-          message: "Product Not Found",
-        });
-      }
+    //   let product = ProductModel.getProductWithId(id);
+    //   if (!product) {
+    //     return res.status(400).json({
+    //       success: false,
+    //       message: "Product Not Found",
+    //     });
+    //   }
 
-      return res.status(200).json({
-        success: true,
-        data: product,
-      });
-    } catch (error) {
-      console.log("error", error);
-      return res.status(500).json({
-        success: false,
-        message: "Internal Server Error",
-      });
+    //   return res.status(200).json({
+    //     success: true,
+    //     data: product,
+    //   });
+    // } catch (error) {
+    //   console.log("error", error);
+    //   return res.status(500).json({
+    //     success: false,
+    //     message: "Internal Server Error",
+    //   });
+    // }
+
+    let { id } = req.params;
+    //validate the data
+    id = Number(id);
+
+    if (Number.isNaN(id)) {
+      throw new ApplicationError("Invalid Product Id", 400);
     }
+
+    let product = ProductModel.getProductWithId(id);
+    if (!product) {
+      throw new ApplicationError("Product Not Found", 400);
+    }
+    return res.status(200).json({
+      success: true,
+      data: product,
+    });
   }
 
   addProduct(req, res) {
