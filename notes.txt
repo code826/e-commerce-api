@@ -211,3 +211,18 @@ https://swagger.io/docs/specification/about/
 //first
 
    
+
+how to run the project localy
+ github url 
+
+ git clone url 
+ install packages 
+ npm install 
+ 
+CORS 
+
+Logging
+
+Handling error
+
+you just need to write yoir action in a file

@@ -1,0 +1,12 @@
+{"level":"info","message":"hi just testing"}
+{"level":"info","message":"hi just testing","timestamp":"2024-08-31T17:16:15.371Z"}
+{"level":"info","message":"hi just testing","timestamp":"2024-08-31T17:18:04.865Z"}
+{"level":"error","message":"i am error","timestamp":"2024-08-31T17:18:04.872Z"}
+{"level":"warn","message":"warning","timestamp":"2024-08-31T17:18:04.873Z"}
+
+[2024-10-10 12:10:10] Error : ''
+
+
+//each log file create datewise
+
+31-08-2024.logger.log

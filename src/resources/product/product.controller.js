@@ -2,6 +2,8 @@
 
 import validator from "validator";
 import ProductModel from "./product.model.js";
+import { writeLog } from "../../utils.js";
+import logger from "../../logger.js";
 
 export default class ProductController {
   getAllProducts(req, res) {
@@ -13,6 +15,8 @@ export default class ProductController {
       });
     } catch (error) {
       console.log("error", error);
+      logger.error(error);
+      //inside a file
       return res.status(500).json({
         success: false,
         message: "Internal Server Error",

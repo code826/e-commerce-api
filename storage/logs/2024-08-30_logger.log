@@ -1,0 +1,15 @@
+[2024-08-31 23:03:27] info:hello
+[2024-08-31 23:03:59] error:error in file
+[2024-08-31 23:05:10] error:ReferenceError: ProductModel1 is not defined
+    at getAllProducts (file:///O:/Vikas%20Singh/ecommerce-api/e-commerce-api/src/resources/product/product.controller.js:11:22)
+    at Layer.handle [as handle_request] (O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\layer.js:95:5)
+    at next (O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\layer.js:95:5)
+    at O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\index.js:346:12)
+    at next (O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\index.js:175:3)
+    at router (O:\Vikas Singh\ecommerce-api\e-commerce-api\node_modules\express\lib\router\index.js:47:12)
+[2024-08-31 23:08:16] error:[object Object]
+[2024-08-31 23:08:58] error:{"a":10}

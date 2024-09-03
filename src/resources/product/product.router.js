@@ -21,7 +21,7 @@ const productController = new ProductController();
  *            description: Failed-Bad Request
  *       404:
  *            description: Failed-Page Not Found
- *       404:
+ *       500:
  *            description: Failed-Server error
  */
 

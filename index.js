@@ -7,20 +7,32 @@ import cartRouter from "./src/resources/cart/cart.router.js";
 import basicAuthorizer from "./src/middlewares/basicAuthorizer.js";
 import jwtAuth from "./src/middlewares/jwtTokenAuthorization.js";
 import swaggerDocs from "./swagger.js";
+import cors from "cors";
+import { writeLog } from "./src/utils.js";
 
 const PORT = 8000;
 
 const server = express();
+const corsOptions = {
+  origin: "http://localhost:8001",
+  methods: ["GET"],
+};
 
 server.use(express.urlencoded({ extended: true })); //query -->
 server.use(express.json()); //content-type: application/json req.body
+server.use(cors());
 // server.use('/',basicAuthorizer);
+// server.options("/api/test", (req, res) => {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:8000");
+//   res.header("Access-Control-Allow-Method", "GET,POST");
+//   return res.sendStatus(200);
+// });
 
 server.use("/api/product", productRouter);
 server.use("/api/user", userRouter);
 server.use("/api/cart", jwtAuth, cartRouter);
 
-server.get("/api/test", jwtAuth, (req, res) => {
+server.get("/api/test", (req, res) => {
   return res.status(200).json({
     success: true,
     data: "all-good",
