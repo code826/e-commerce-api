@@ -238,3 +238,137 @@ https://swagger.io/docs/specification/about/
     created_at:moment().format('YYYY-MM-DD HH:mm:ss');
 
    }
+
+
+
+   //no sql 
+    // data in json format 
+    //database 
+      //collection
+        //document --> json 
+         {
+          id:1; //field : 
+         }
+
+   // schemaless --> document1 and document2 of same collection may have different 
+
+
+
+   {
+    id:1,
+    name:'vikas'
+   },
+   {
+    id:1,
+    name:'dfkjdf',
+    class:10
+
+   }   
+//
+
+
+//CRUD Operation
+
+ //UI
+   //creat database db_name;
+// show databases;
+// use db_name;		
+
+
+{
+	"roll_no":2,
+	"name":"vikas",
+	"email":"v1@gmail.com",
+	"pass":"12345",
+	"habbits":{
+		"indoor":["chess"],
+		"outdoor":["cricket","basketball"]
+	}
+}
+abcd-de
+db['adb-de']
+
+//CRUD
+ //Create 
+	//insertOne
+		db.users.insertOne({
+			"roll_no":2,
+			"name":"vikas",
+			"email":"t1@gmail.com",
+			"pass":"12345",
+			"habbits":{
+				"indoor":["chess"],
+				"outdoor":["cricket","basketball"]
+			}
+		});
+		db.users_new.insertMany([
+			{
+				"roll_no":4,
+				"name":"sumit",
+				"email":"t3@gmail.com",
+				"pass":"12345",
+				"habbits":{
+					"indoor":["chess"],
+					"outdoor":["cricket","basketball"]
+				}
+			},
+			{
+				"roll_no":5,
+				"name":"ajith",
+				"email":"t4@gmail.com",
+				"pass":"12345",
+				"habbits":{
+					"indoor":["chess"],
+					"outdoor":["cricket","basketball"]
+				}
+			},
+		]);
+		return {
+		  acknowledged: true,
+		  insertedIds: {
+		    '0': ObjectId('66e068d3a823f0aceec73bfa'),
+		    '1': ObjectId('66e068d3a823f0aceec73bfb')
+		  }
+		}
+	//insertMany
+	
+ //read
+		//findOne
+		 db.users.findOne({name:"vikas1"})
+		//find
+		 db.users.find({name:"vikas1"}); // 
+//update 
+		//
+		 //updateOne
+		 db.users.updateOne({email:"v2@gmail.com"},{$set:{password:'54321'}});
+		//updateMany
+		 db.users.updateMany({name:"vikas"},{$set:{pass:12345}});
+		//replaceOne
+		 db.users.replaceOne({name:'vikas'},{email:'only-field@gmail.com',name:'dfnnbjkdbf'});
+//delete
+		 //
+		 .deleteOne({name:"xgtsiud"});
+		 .deleteMany({name:'dhng'})
+
+{
+	name:"vikas",
+	email:"t1@gmail.com"
+}
+
+{
+	email:"t2@gmail.com"
+}
+
+{
+	email:"t2@gmail.com"
+}
+
+{
+	_id:1
+	name:"vikas"
+}
+{
+	_id:2
+	name:null
+
+}

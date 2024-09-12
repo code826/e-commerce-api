@@ -21,7 +21,7 @@ const productController = new ProductController();
  *            description: Failed-Bad Request
  *       404:
  *            description: Failed-Page Not Found
- *       404:
+ *       500:
  *            description: Failed-Server error
  */
 
@@ -94,7 +94,10 @@ router.get("/test", productController.testProduct);
   *       description: server error
  */
 
-router.get("/", productController.getAllProducts);
+//router.get("/", productController.getAllProducts.bind(productController));
+router.get("/", (req, res) => {
+  productController.getAllProducts(req, res);
+});
 
 /**
  * 
@@ -170,7 +173,12 @@ router.get("/filter", productController.filterProduct);
  *       500:
  *         description: Server Error
  */
-router.get("/:id", productController.getProductWithId);
+// router.get("/:id", productController.getProductWithId.bind(productController));
+router.get("/:id", (req, res) => {
+  productController.getProductWithId(req, res);
+});
+//passing refernce --> this --> window,undefined , undefined
+//this--> productController
 
 //post
 
@@ -267,7 +275,10 @@ router.get("/:id", productController.getProductWithId);
  *       500:
  *         description: Server error. Unable to create product.
  */
-router.post("/", jwtAuth, productController.addProduct);
+// router.post("/", productController.addProduct);
+router.post("/", (req, res) => {
+  productController.addProduct(req, res);
+});
 
 router.put("/:id", (req, res) => {
   return res.status(200).json({

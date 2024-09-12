@@ -1,7 +1,8 @@
+import { getDatabase } from "../../config/mongodb.js";
 import UserModel from "../user/user.model.js";
 
 const categories = ["category_a", "category_b", "category_c"];
-
+const collectionName = "products";
 const sizes = ["s", "m", "l", "xl"];
 export default class ProductModel {
   constructor(_id, _name, _describtion, _category, _price, _imageUrl, _sizes) {
@@ -15,8 +16,12 @@ export default class ProductModel {
     this.ratings = []; // because rating will come once product is created
   }
 
-  static getAllProducts() {
+  static async getAllProducts() {
     //
+    // let db = getDatabase();
+    // let collection = db.collection(collectionName);
+    // let products = await collection.find({}).toArray();
+    // console.log("product", products, typeof products);
     return products;
   }
   static getProductWithId(_id) {
@@ -34,7 +39,7 @@ export default class ProductModel {
   static isSizeValid(size) {
     return sizes.indexOf(size) >= 0;
   }
-  static addNewProduct(obj) {
+  static async addNewProduct(obj) {
     let id = this.getAllProducts().length + 1;
     let product = new ProductModel(
       id,
@@ -45,8 +50,11 @@ export default class ProductModel {
       obj.imageUrl,
       obj.sizes
     );
-    products.push(product);
-    return product;
+    // let db = getDatabase();
+    // let collection = db.collection(collectionName);
+    // let result = await collection.insertOne(product);
+    //logic
+    return null;
   }
   //make sure  all three params are present
 

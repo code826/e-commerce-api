@@ -1,10 +1,17 @@
 import { ApplicationError } from "./applicationError.js";
+import { connectToMongDB } from "./config/mongodb.js";
+
+import ProductRepository from "./resources/product/product.repository.js";
 import { decodeBase64, encodeBase64 } from "./utils.js";
 
-function init() {
+async function init() {
   try {
-    console.log(10);
-    throw new ApplicationError("generate new error", 403);
+    // await connectToMongDB();
+    let repo = new ProductRepository();
+    let resp = await repo.update("66e30b9fc7d66aa1ed647df8", {
+      name: "changed-name",
+    });
+    console.log("resp", resp);
   } catch (error) {
     console.log("error", error);
   }

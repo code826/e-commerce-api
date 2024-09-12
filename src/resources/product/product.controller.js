@@ -3,9 +3,14 @@
 import validator from "validator";
 import ProductModel from "./product.model.js";
 import { ApplicationError } from "../../applicationError.js";
+import ProductRepository from "./product.repository.js";
 
 export default class ProductController {
-  getAllProducts(req, res) {
+  constructor() {
+    this.repository = new ProductRepository();
+  }
+  async getAllProducts(req, res) {
+    ProductRepository.getAll();
     // try {
     //   let products = ProductModel1.getAllProducts();
     //   return res.status(200).json({
@@ -19,16 +24,17 @@ export default class ProductController {
     //     message: "Internal Server Error",
     //   });
     // }
-    let products = ProductModel1.getAllProducts();
+    // let products = await ProductModel.getAllProducts();
+    console.log("this", this);
+    let products = await this.repository.getAll();
     return res.status(200).json({
       success: true,
       data: products,
     });
   }
 
-  getProductWithId(req, res) {
+  async getProductWithId(req, res) {
     //get the data
-    console.log("hello");
 
     // try {
     //   let { id } = req.params;
@@ -64,13 +70,14 @@ export default class ProductController {
 
     let { id } = req.params;
     //validate the data
-    id = Number(id);
+    // id = Number(id);
 
-    if (Number.isNaN(id)) {
-      throw new ApplicationError("Invalid Product Id", 400);
-    }
+    // if (Number.isNaN(id)) {
+    //   throw new ApplicationError("Invalid Product Id", 400);
+    // }
 
-    let product = ProductModel.getProductWithId(id);
+    // let product = ProductModel.getProductWithId(id);
+    let product = await this.repository.getProductById(id);
     if (!product) {
       throw new ApplicationError("Product Not Found", 400);
     }
@@ -80,7 +87,7 @@ export default class ProductController {
     });
   }
 
-  addProduct(req, res) {
+  async addProduct(req, res) {
     try {
       console.log("body", req.body);
       const { name, describtion, category, price, imageUrl, sizes } = req.body;
@@ -150,8 +157,8 @@ export default class ProductController {
         sizes: sizes,
       };
 
-      let newProduct = ProductModel.addNewProduct(obj);
-
+      // let newProduct = await ProductModel.addNewProduct(obj);
+      let newProduct = await this.repository.create(obj);
       return res.status(200).json({
         succss: true,
         data: newProduct,

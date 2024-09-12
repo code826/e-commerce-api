@@ -8,6 +8,7 @@ import basicAuthorizer from "./src/middlewares/basicAuthorizer.js";
 import jwtAuth from "./src/middlewares/jwtTokenAuthorization.js";
 import swaggerDocs from "./swagger.js";
 import { ApplicationError } from "./src/applicationError.js";
+import { connectToMongDB } from "./src/config/mongodb.js";
 
 const PORT = 8000;
 
@@ -59,16 +60,31 @@ server.get("/api/test", jwtAuth, (req, res) => {
 //         message:'Page Not Found'
 //     })
 // })
-
-server.listen(PORT, (err) => {
-  if (err) {
-    console.log("error", err);
-    return;
-  }
+async function startServer() {
   try {
-    swaggerDocs(server, PORT);
-    console.log("server started at port", PORT);
+    await connectToMongDB(); //connect To Database
+    server.listen(PORT, (err) => {
+      if (err) {
+        console.log("error", err);
+        throw new Error(err);
+      }
+      console.log("server started at port", PORT);
+    });
   } catch (error) {
     console.log("error", error);
   }
-});
+}
+startServer();
+
+// server.listen(PORT, (err) => {
+//   if (err) {
+//     console.log("error", err);
+//     return;
+//   }
+//   try {
+//     swaggerDocs(server, PORT);
+//     console.log("server started at port", PORT);
+//   } catch (error) {
+//     console.log("error", error);
+//   }
+// });

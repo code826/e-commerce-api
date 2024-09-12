@@ -1,3 +1,6 @@
+import { getDatabase } from "../../config/mongodb.js";
+
+let collectionName = "users";
 export default class UserModel {
   constructor(_id, _name, _email, _password) {
     this.id = _id;
@@ -6,15 +9,19 @@ export default class UserModel {
     this.password = _password;
     this.role = "customer";
   }
-  static createUser(obj) {
+  static async createUser(obj) {
     const user = new UserModel(
       users.length + 1,
       obj.name,
       obj.email,
       obj.password
     );
-    users.push(user);
-    return user;
+    //db.users.insertOne({})
+    //users.push(user);
+    let db = getDatabase();
+    console.log("user", user);
+    let resp = await db.collection(collectionName).insertOne(user);
+    return resp;
   }
   updateRoleToAdmin() {
     this.role = "admin";

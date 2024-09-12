@@ -1,0 +1,108 @@
+In short, a driver provides the tools and methods to "drive"
+ the interaction between your application and a database.
+  It is language-specific because it has to integrate with the language’s syntax and conventions,
+   but the core function remains the same across different languages: to abstract and simplify communication with a database.
+
+import { MongoClient } from 'mongodb';
+
+const uri = 'mongodb://localhost:27017'; // Your MongoDB URI
+const client = new MongoClient(uri);
+
+const connectToMongoDB = async () => {
+  try {
+    await client.connect();
+    console.log('Successfully connected to MongoDB');
+  } catch (error) {
+    console.error('Failed to connect to MongoDB:', error);
+    throw error; // Re-throw the error to prevent the server from starting
+  }
+};
+
+const startServer = async () => {
+  try {
+    // First, connect to MongoDB
+    await connectToMongoDB();
+    
+    // Only start the server if the DB connection is successful
+    server.listen(PORT, (err) => {
+      if (err) {
+        console.log('Server startup error:', err);
+        return;
+      }
+
+      try {
+        swaggerDocs(server, PORT);
+        console.log('Server started at port', PORT);
+      } catch (error) {
+        console.log('Swagger error:', error);
+      }
+    });
+  } catch (error) {
+    // If DB connection fails, server won't start
+    console.error('Server not started due to DB connection failure.');
+  }
+};
+
+startServer(); // Run the async function to connect DB and start server
+
+
+
+import connectToDB from './db.js';
+
+class ProductRepository {
+  async findAll() {
+    const db = await connectToDB();
+    const products = await db.collection('products').find({}).toArray();
+    return products;
+  }
+
+  async findById(id) {
+    const db = await connectToDB();
+    const product = await db.collection('products').findOne({ _id: new MongoClient.ObjectId(id) });
+    return product;
+  }
+
+  async create(productData) {
+    const db = await connectToDB();
+    const result = await db.collection('products').insertOne(productData);
+    return result.ops[0];
+  }
+
+  async update(id, productData) {
+    const db = await connectToDB();
+    const result = await db.collection('products').findOneAndUpdate(
+      { _id: new MongoClient.ObjectId(id) },
+      { $set: productData },
+      { returnOriginal: false }
+    );
+    return result.value;
+  }
+
+  async delete(id) {
+    const db = await connectToDB();
+    await db.collection('products').deleteOne({ _id: new MongoClient.ObjectId(id) });
+  }
+}
+
+export default ProductRepository;
+
+
+
+
+//step 1 : connect to db 
+// we created config file we write mainly two function 
+ connectToDB --> client 
+ client.db(dbName);
+
+// once you connected to db you can perform crud operations 
+ // db.getCollection(collectionName).insertOne();
+
+
+  Format: The ObjectID is a 12-byte identifier, usually represented as a 24-character hexadecimal string. It consists of:
+
+A 4-byte timestamp, representing the ObjectID’s creation time.
+A 5-byte random value, unique to the machine.
+A 3-byte incrementing counter, initialized to a random value.
+Usage: The ObjectID ensures that each document has a unique identifier. It’s used by MongoDB to index documents and can be used in queries to retrieve specific documents
+
+
