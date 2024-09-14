@@ -151,7 +151,9 @@ router.get("/", (req, res) => {
  *         description: Server Error
  */
 
-router.get("/filter", productController.filterProduct);
+router.get("/filter", (req, res) => {
+  productController.filterProduct(req, res);
+});
 
 /**
  * @openapi

@@ -372,3 +372,56 @@ db['adb-de']
 	name:null
 
 }
+
+
+// find --> query --> 
+ //operator 
+// password storage 
+// dotenv
+// repositroy
+
+//operators 
+  // product 
+    price > 100 
+    price > 10 and < 30
+
+    price =10 or off is 90%
+
+
+name == "vikas" , "price" >= 10;
+
+.find({$and:[{name:"vikas"},{$price:{$gt:10}}]})
+
+
+$and:[{$name:"producttwo"},{$price:{$gte : 10 }}]
+
+
+{
+  id:
+  name:
+  class
+  size:["s","m","l"]
+},
+$in:["m","l"]
+{
+  id:
+  name:
+  class:
+  rollNo:>=0
+}
+
+.find({rollNo:{$exist:true}});
+
+
+price >10 and price <20
+
+.find({$and:[{price:{$gt:10}},{price:{$lt:20}}]})
+
+
+size:["s","m"];
+
+add large 
+
+size:["s","m","l"];
+
+.updateOne({_id:'123'},{$set:{size:size}});

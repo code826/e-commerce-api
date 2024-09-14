@@ -35,13 +35,12 @@ export default class UserModel {
     return users;
   }
 
-  static getUserFromEmail(email) {
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].email == email) {
-        return users[i];
-      }
-    }
-    return null;
+  static async getUserFromEmail(email) {
+    let db = getDatabase();
+
+    let resp = await db.collection(collectionName).findOne({ email: email });
+    console.log("user", resp);
+    return resp;
   }
   static userSignIn(email, password) {
     for (let i = 0; i < users.length; i++) {

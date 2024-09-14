@@ -2,6 +2,7 @@ import validator from "validator";
 import UserModel from "./user.model.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { hashPassword, verifyPassword } from "../../utils.js";
 
 //dotenv.config();
 export default class UserController {
@@ -29,7 +30,7 @@ export default class UserController {
       let user = {
         name: name,
         email: email,
-        password: password,
+        password: await hashPassword(password),
       };
       let newUser = await UserModel.createUser(user);
       console.log(newUser);
@@ -49,7 +50,7 @@ export default class UserController {
     }
   }
 
-  login(req, res) {
+  async login(req, res) {
     try {
       const { email, password } = req.body;
 
@@ -60,7 +61,7 @@ export default class UserController {
         });
       }
 
-      let user = UserModel.getUserFromEmail(email);
+      let user = await UserModel.getUserFromEmail(email);
       if (!user) {
         return res.status(400).json({
           success: false,
@@ -69,8 +70,8 @@ export default class UserController {
       }
 
       console.log("user", user);
-
-      if (user.password !== password) {
+      let passwordMatch = await verifyPassword(password, user.password);
+      if (!passwordMatch) {
         return res.status(400).json({
           success: false,
           message: "Email/Password Is Not Valid",

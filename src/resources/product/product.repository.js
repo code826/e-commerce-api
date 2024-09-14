@@ -35,6 +35,34 @@ class ProductRepository {
     let collection = db.collection("products");
     return collection.deleteOne({ _id: new ObjectId(productId) });
   }
+
+  async filterProduct(minPrice, maxPrice, category, size) {
+    //
+    //$and : [{price >= minPrice},{price >= maxPrice},{category:''},{sizes:{$in:''}}]
+    let filterCondition = {};
+    let filterAndCondition = [];
+    if (minPrice) {
+      filterAndCondition.push({ price: { $gte: minPrice } });
+    }
+    if (maxPrice) {
+      filterAndCondition.push({ price: { $lte: maxPrice } });
+    }
+    if (category) {
+      filterAndCondition.push({ category: category });
+    }
+    if (size) {
+      filterAndCondition.push({ sizes: { $in: size } });
+    }
+
+    if (filterAndCondition.length > 0) {
+      filterCondition = { $and: filterAndCondition };
+    }
+    console.log(filterCondition);
+
+    let db = getDatabase();
+    let collection = db.collection("products");
+    return collection.find(filterCondition).toArray();
+  }
 }
 
 export default ProductRepository;

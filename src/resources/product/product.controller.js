@@ -171,9 +171,9 @@ export default class ProductController {
       });
     }
   }
-  filterProduct(req, res) {
+  async filterProduct(req, res) {
     try {
-      let { minPrice, maxPrice, category } = req.query;
+      let { minPrice, maxPrice, category, size } = req.query;
 
       //validate
 
@@ -205,7 +205,12 @@ export default class ProductController {
         });
       }
 
-      let products = ProductModel.productFilter(minPrice, maxPrice, category);
+      let products = await this.repository.filterProduct(
+        minPrice,
+        maxPrice,
+        category,
+        size
+      );
 
       return res.status(200).json({
         success: true,

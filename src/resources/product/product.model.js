@@ -74,6 +74,9 @@ export default class ProductModel {
   }
   static rateProduct(userId, productId, rating) {
     // this user Id exist or not;
+    //id:
+    //rating:{}
+    //set
     let users = UserModel.getAllUsers();
     let user = users.find((user) => {
       return user.id === userId;

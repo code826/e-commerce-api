@@ -2,15 +2,19 @@ import { ApplicationError } from "./applicationError.js";
 import { connectToMongDB } from "./config/mongodb.js";
 
 import ProductRepository from "./resources/product/product.repository.js";
-import { decodeBase64, encodeBase64 } from "./utils.js";
+import {
+  decodeBase64,
+  encodeBase64,
+  hashPassword,
+  verifyPassword,
+} from "./utils.js";
 
 async function init() {
   try {
-    // await connectToMongDB();
-    let repo = new ProductRepository();
-    let resp = await repo.update("66e30b9fc7d66aa1ed647df8", {
-      name: "changed-name",
-    });
+    let resp = await verifyPassword(
+      "1234",
+      "$2b$10$wZE1NtEP9Tx3U/tPObuoTuoaEFWWh8Ia.QC48U4cZqp6esDYqTK9u"
+    );
     console.log("resp", resp);
   } catch (error) {
     console.log("error", error);
