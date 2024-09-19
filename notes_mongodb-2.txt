@@ -1,0 +1,99 @@
+//
+//rate a product
+// we will see how to use $push and make update on nesting object
+
+{
+    _id:'326478362496350635',
+    name:'product_1',
+    describtion:'',
+    rating: [
+        {
+            userId:1
+            rating:5
+        },
+        {
+            userId:2,
+            rating:4
+        }
+    ]
+}
+// ,1,5
+//rating 
+ //productId,userId,rating
+
+
+// cart controller
+
+// 
+ {
+    userId:
+    productId:
+    qty:
+ }
+
+ //
+ {
+    userId:1,
+    productId:2
+    qty:5+7
+ }
+
+  {
+    userId:2,
+    productId:2
+    qty:5
+ }
+//case what happen if same userId but different productId 
+  --> two different document will be created
+
+// case what happen if user and product both are same
+    // we will not create new entry just update the qty increment
+
+// model
+// get
+// delete
+// update
+// insert
+
+// update -->
+// objectId
+
+
+const { MongoClient } = require('mongodb');
+
+// Connection URI
+const uri = 'mongodb://localhost:27017';
+
+// Create a new MongoClient
+const client = new MongoClient(uri);
+
+async function runTransaction() {
+    const session = client.startSession();
+
+    try {
+        // Start transaction
+        session.startTransaction();
+
+        // Example: Access the collections
+        const usersCollection = client.db('mydb').collection('users');
+        const ordersCollection = client.db('mydb').collection('orders');
+
+        // Insert operations (example)
+        await usersCollection.insertOne({ name: 'Vikas', age: 30 }, { session });
+        await ordersCollection.insertOne({ product: 'Laptop', price: 1500 }, { session });
+
+        // Commit the transaction
+        await session.commitTransaction();
+        console.log('Transaction committed successfully!');
+    } catch (error) {
+        console.error('Transaction aborted due to an error:', error);
+        await session.abortTransaction(); // Roll back changes
+    } finally {
+        session.endSession();
+    }
+}
+
+client.connect()
+    .then(runTransaction)
+    .catch(console.error)
+    .finally(() => client.close());

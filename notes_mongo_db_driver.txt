@@ -106,3 +106,11 @@ A 3-byte incrementing counter, initialized to a random value.
 Usage: The ObjectID ensures that each document has a unique identifier. It’s used by MongoDB to index documents and can be used in queries to retrieve specific documents
 
 
+// mongo db use $push and then $set with .$ condition
+
+//cart item 
+ //add 
+ userId,productId,qty
+ if qty present ok othherwisee Increase it by qty $upsert insert or update
+ //delete 
+ //get

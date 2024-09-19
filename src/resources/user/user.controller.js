@@ -19,8 +19,8 @@ export default class UserController {
       }
 
       //validation for name, password
-
-      if (UserModel.getUserFromEmail(email)) {
+      let user1 = await UserModel.getUserFromEmail(email);
+      if (user1) {
         return res.status(400).json({
           success: false,
           message: `Error : Email ${email} already exist in the system`,

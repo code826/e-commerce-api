@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../resources/user/user.model.js";
 
-const jwtAuth = (req, res, next) => {
+const jwtAuth = async (req, res, next) => {
   //read from the headers
 
   if (req.headers && req.headers.authorization) {
@@ -16,7 +16,7 @@ const jwtAuth = (req, res, next) => {
         // it is the same user
         let email = payloadData.email;
 
-        let user = UserModel.getUserFromEmail(email);
+        let user = await UserModel.getUserFromEmail(email);
         if (!user) {
           return res.status(401).json({
             success: false,

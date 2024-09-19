@@ -224,7 +224,7 @@ export default class ProductController {
       });
     }
   }
-  rateProduct(req, res) {
+  async rateProduct(req, res) {
     try {
       let { userId, productId, rating } = req.body;
       if (!userId) {
@@ -242,17 +242,21 @@ export default class ProductController {
         });
       }
 
-      let resp = ProductModel.rateProduct(userId, productId, rating);
-      if (!resp["success"]) {
+      let resp = await this.repository.rateProduct(userId, productId, rating);
+      if (!resp) {
         return res.status(401).json({
           success: false,
-          message: resp.message,
+          message: "Not Inserted",
         });
       }
 
       return res.status(200).json({
         success: true,
-        data: resp.data,
+        data: {
+          userId: userId,
+          productId: productId,
+          rating: rating,
+        },
       });
     } catch (error) {
       console.log("error", error);
@@ -262,11 +266,11 @@ export default class ProductController {
       });
     }
   }
-  rateProductWithAuthenticate(req, res) {
+  async rateProductWithAuthenticate(req, res) {
     try {
       let { productId, rating } = req.body;
       console.log("user", req.user);
-      let userId = req.user.id;
+      let userId = req.user._id;
       if (!userId) {
         return res.status(401).json({
           success: false,
@@ -282,17 +286,21 @@ export default class ProductController {
         });
       }
 
-      let resp = ProductModel.rateProduct(userId, productId, rating);
-      if (!resp["success"]) {
+      let resp = await this.repository.rateProduct(userId, productId, rating);
+      if (!resp) {
         return res.status(401).json({
           success: false,
-          message: resp.message,
+          message: "Not Inserted",
         });
       }
 
       return res.status(200).json({
         success: true,
-        data: resp.data,
+        data: {
+          userId: userId,
+          productId: productId,
+          rating: rating,
+        },
       });
     } catch (error) {
       console.log("error", error);

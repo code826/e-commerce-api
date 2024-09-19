@@ -63,6 +63,58 @@ class ProductRepository {
     let collection = db.collection("products");
     return collection.find(filterCondition).toArray();
   }
+  async rateProduct(userId, productId, rating) {
+    let db = getDatabase();
+    let collection = db.collection("products");
+    // find the product
+    let product = await collection.findOne({ _id: new ObjectId(productId) });
+
+    // look that product has rating for that userId
+    let userFound = product?.ratings?.find((item) => item.userId == userId);
+    let resp = null;
+    collection.findOneAndUpdate();
+    //product
+    // let ratings = [];
+    // product?.ratings?.find((item) => {
+    //   if (item.userId == userId) {
+    //     ratings.push({
+    //       userId: userId,
+    //       rating: rating,
+    //     });
+    //   } else {
+    //     ratings.push(item);
+    //   }
+    // });
+    if (userFound) {
+      // update the rating
+      resp = await collection.updateOne(
+        {
+          _id: new ObjectId(productId),
+          "ratings.userId": new ObjectId(userId),
+        },
+        {
+          $set: {
+            "ratings.$.rating": rating,
+          },
+        }
+      );
+    } else {
+      resp = await collection.updateOne(
+        { _id: new ObjectId(productId) },
+        {
+          $push: { ratings: { userId: new ObjectId(userId), rating: rating } },
+        }
+      );
+    }
+
+    return resp?.acknowledged;
+  }
 }
+
+//return null;
+//return [1,2,3];
+
+//return [];
+//return [1,2,3];
 
 export default ProductRepository;

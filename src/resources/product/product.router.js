@@ -297,10 +297,10 @@ router.delete("/:id", (req, res) => {
   });
 });
 
-router.post("/rate", productController.rateProduct);
-router.post(
-  "/rate/authenticate",
-  jwtAuth,
-  productController.rateProductWithAuthenticate
-);
+router.post("/rate", (req, res) => {
+  productController.rateProduct(req, res);
+});
+router.post("/rate/authenticate", jwtAuth, (req, res) => {
+  productController.rateProductWithAuthenticate(req, res);
+});
 export default router;
