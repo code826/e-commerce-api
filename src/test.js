@@ -1,5 +1,7 @@
 import { ApplicationError } from "./applicationError.js";
 import { connectToMongDB, getDatabase, getSession } from "./config/mongodb.js";
+import { connectToMongoDBFromMongoose } from "./config/mongoose.js";
+import productModel from "./resources/product/product.model.js";
 
 import ProductRepository from "./resources/product/product.repository.js";
 import {
@@ -11,28 +13,37 @@ import {
 
 async function init() {
   try {
-    var session = await getSession();
-    session.startTransaction();
-    let db = getDatabase();
-    await db
-      .collection("products")
-      .insertOne({ name: "product-transaction-1" }, { session });
-    await db1
-      .collection("products")
-      .insertOne(
-        { name: "product1-transaction-2", price: "test4" },
-        { session }
-      );
-    await session.commitTransaction();
+    await connectToMongoDBFromMongoose();
+    let data = {
+      name: "test_product_mongoose_update_1",
+      price: 10,
+    };
+
+    deleteOperation("66f2f218692e6c3ace73b59c");
   } catch (error) {
-    await session.abortTransaction();
-    console.log("error", error);
-  } finally {
-    session.endSession();
+    console.log("err", error);
   }
 }
 
 init();
+
+async function insertOperation(data) {
+  let product = await productModel.create(data);
+  console.log("operation success", product);
+}
+
+async function updateOperation(productId, productData) {
+  let product = await productModel.findById(productId);
+  product.price = 23;
+  product.name = "changed";
+  await product.save();
+  console.log("operation success", product);
+}
+
+async function deleteOperation(productId) {
+  let product = await productModel.findByIdAndDelete(productId);
+  console.log("operation success", product);
+}
 
 /**
  * @swagger

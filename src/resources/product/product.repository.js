@@ -1,21 +1,24 @@
 import { ObjectId } from "mongodb";
 import { getDatabase } from "../../config/mongodb.js";
+import productModel from "./product.model.js";
 class ProductRepository {
   async getAll() {
-    let db = getDatabase();
-    let collection = db.collection("products");
-    return await collection.find({}).toArray();
+    try {
+      let products = await productModel.find({});
+      //let products = await productModel.find({}).select("name").limit(2);
+      return products;
+    } catch (error) {
+      console.log("error", error);
+      throw new Error("Error while finding product");
+    }
   }
   async getProductById(productId) {
-    let db = getDatabase();
-    let collection = db.collection("products");
-    return await collection.findOne({ _id: new ObjectId(productId) });
+    let product = await productModel.findById(productId);
+    //let product = await productModel.findOne({ _id: productId });
+    return product;
   }
   async create(productData) {
-    let db = getDatabase();
-    let collection = db.collection("products");
-    let result = await collection.insertOne(productData);
-    //console.log(result.ops[0]);
+    let result = await productModel.create(productData);
     return result;
   }
 
@@ -31,9 +34,8 @@ class ProductRepository {
     );
   }
   async delete(productId) {
-    let db = getDatabase();
-    let collection = db.collection("products");
-    return collection.deleteOne({ _id: new ObjectId(productId) });
+    let product = await productModel.findByIdAndDelete(productId);
+    return product;
   }
 
   async filterProduct(minPrice, maxPrice, category, size) {

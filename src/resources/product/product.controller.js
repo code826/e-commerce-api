@@ -10,7 +10,7 @@ export default class ProductController {
     this.repository = new ProductRepository();
   }
   async getAllProducts(req, res) {
-    ProductRepository.getAll();
+    this.repository.getAll();
     // try {
     //   let products = ProductModel1.getAllProducts();
     //   return res.status(200).json({
@@ -91,7 +91,7 @@ export default class ProductController {
     try {
       console.log("body", req.body);
       const { name, describtion, category, price, imageUrl, sizes } = req.body;
-
+      var errorMssg = "";
       //validate the data
 
       if (!name || !describtion || !category || !imageUrl || !sizes) {
@@ -125,12 +125,13 @@ export default class ProductController {
         });
       }
 
-      if (!ProductModel.isCatgeoryValid(category)) {
-        return res.status(400).json({
-          success: false,
-          message: `Category ${category} Is Not Valid`,
-        });
-      }
+      //TODO replace with schema statics
+      // if (!ProductModel.isCatgeoryValid(category)) {
+      //   return res.status(400).json({
+      //     success: false,
+      //     message: `Category ${category} Is Not Valid`,
+      //   });
+      // }
 
       if (!Array.isArray(sizes)) {
         return res.status(400).json({
@@ -140,12 +141,13 @@ export default class ProductController {
       }
       //["s","m"]
       for (let i = 0; i < sizes.length; i++) {
-        if (!ProductModel.isSizeValid(sizes[i])) {
-          return res.status(400).json({
-            success: false,
-            message: `Size ${sizes[i]} is not valid `,
-          });
-        }
+        //TODO : replace with schema function
+        // if (!ProductModel.isSizeValid(sizes[i])) {
+        //   return res.status(400).json({
+        //     success: false,
+        //     message: `Size ${sizes[i]} is not valid `,
+        //   });
+        // }
       }
 
       let obj = {
@@ -198,12 +200,13 @@ export default class ProductController {
         });
       }
 
-      if (!category || !ProductModel.isCatgeoryValid(category)) {
-        return res.status(400).json({
-          success: false,
-          message: "Category Is Not Valid",
-        });
-      }
+      //TODO replace with schema
+      // if (!category || !ProductModel.isCatgeoryValid(category)) {
+      //   return res.status(400).json({
+      //     success: false,
+      //     message: "Category Is Not Valid",
+      //   });
+      // }
 
       let products = await this.repository.filterProduct(
         minPrice,

@@ -9,6 +9,7 @@ import jwtAuth from "./src/middlewares/jwtTokenAuthorization.js";
 import swaggerDocs from "./swagger.js";
 import { ApplicationError } from "./src/applicationError.js";
 import { connectToMongDB } from "./src/config/mongodb.js";
+import { connectToMongoDBFromMongoose } from "./src/config/mongoose.js";
 
 const PORT = 8000;
 
@@ -62,7 +63,8 @@ server.get("/api/test", jwtAuth, (req, res) => {
 // })
 async function startServer() {
   try {
-    await connectToMongDB(); //connect To Database
+    //await connectToMongDB(); //connect To Database
+    await connectToMongoDBFromMongoose();
     server.listen(PORT, (err) => {
       if (err) {
         console.log("error", err);
