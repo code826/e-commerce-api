@@ -1,5 +1,5 @@
 import { ApplicationError } from "./applicationError.js";
-import { connectToMongDB } from "./config/mongodb.js";
+import { connectToMongDB, getDatabase, getSession } from "./config/mongodb.js";
 
 import ProductRepository from "./resources/product/product.repository.js";
 import {
@@ -11,13 +11,24 @@ import {
 
 async function init() {
   try {
-    let resp = await verifyPassword(
-      "1234",
-      "$2b$10$wZE1NtEP9Tx3U/tPObuoTuoaEFWWh8Ia.QC48U4cZqp6esDYqTK9u"
-    );
-    console.log("resp", resp);
+    var session = await getSession();
+    session.startTransaction();
+    let db = getDatabase();
+    await db
+      .collection("products")
+      .insertOne({ name: "product-transaction-1" }, { session });
+    await db1
+      .collection("products")
+      .insertOne(
+        { name: "product1-transaction-2", price: "test4" },
+        { session }
+      );
+    await session.commitTransaction();
   } catch (error) {
+    await session.abortTransaction();
     console.log("error", error);
+  } finally {
+    session.endSession();
   }
 }
 

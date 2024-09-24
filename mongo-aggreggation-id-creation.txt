@@ -1,0 +1,71 @@
+//i need to crate our own id 
+_id --> created by mongo db we need our own 
+// cart repositroy 
+// insert it a id will be created and it is like 
+1,2,3,4,5,6
+
+_id:
+// 1. while inserting before we see how many documents we have 
+    //5 
+    6
+
+    1,2,3,4,5,6
+
+
+    1,2,3,4,5
+    deleted 2nd
+    1,3,4,5,6
+
+    1,2,3,4,5,6 --> test 
+
+    //history (6->test created)
+    //history(6--->test --> deleted)
+
+    //(6-->new_test)
+rat
+// 1,_,3
+//
+//unique --> uuid();
+counter:
+    {
+        _id:'cart',
+        value:3
+
+    },
+    {
+        id:'product',
+        value:0
+
+    }
+// go and create collection if not present on initatin db connection
+// write a function to get counter  and updat counter
+// i can insert cart withh valu ---> 0
+
+counter:3
+{
+    id:1
+}
+{
+    id:2
+}
+{
+    id:3
+}
+4;
+{
+
+}
+
+//
+start Transaction
+    q1
+    q2
+    q3
+
+commit Transaction -> if every queery has run successfully 
+
+
+rollback / abort ---> any of the query faild and you need to revert back
+
+aggreation 
+

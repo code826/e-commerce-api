@@ -88,7 +88,7 @@ export default class UserController {
       };
       let secretKey = "sgdjhsdghsd##$";
 
-      let token = jwt.sign(payloadData, secretKey, { expiresIn: 500 });
+      let token = jwt.sign(payloadData, secretKey, { expiresIn: 60 * 30 });
 
       return res.status(200).json({
         success: true,

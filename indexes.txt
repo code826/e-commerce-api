@@ -1,0 +1,297 @@
+
+What is an Index in MongoDB?
+An index in MongoDB is a data structure that improves the speed of query operations on a collection. Without an index, MongoDB has to scan all the documents in a collection to find the requested data, which is inefficient for large datasets. With an index, MongoDB can quickly locate the data by looking up the indexed field.
+
+Indexes store a mapping between the field values and the document location, allowing MongoDB to avoid a full collection scan and retrieve the data efficiently.
+
+Types of Indexes in MongoDB
+Single Field Index: Indexes a single field, like name or age.
+Compound Index: Indexes multiple fields. Useful when queries filter by multiple fields.
+Multikey Index: Indexes arrays, allowing efficient queries on arrays and array fields.
+Text Index: Enables full-text search on string content.
+Hashed Index: Indexes the hashed value of a field, useful for distributing data in a sharded cluster.
+Wildcard Index: Automatically indexes all fields in a document. Useful for schemas where field names are dynamic or unpredictable.
+Advantages of Indexes
+Faster Query Execution: Queries that use indexed fields are much faster.
+Efficient Data Access: Indexes allow MongoDB to retrieve data without scanning the entire collection.
+Disadvantages of Indexes
+Slower Write Operations: Inserts, updates, and deletes take longer because MongoDB must also update the index.
+Storage Overhead: Indexes consume additional disk space and memory.
+Too Many Indexes: Having too many indexes can degrade performance since each write operation has to update all the indexes.
+How to Create, List, and Drop Indexes in MongoDB
+1. Creating an Index
+Indexes are created using the createIndex() method on a collection. You can specify the fields and the type of index you want to create.
+
+Syntax for Single Field Index:
+javascript
+Copy code
+db.collection.createIndex({ field: 1 });
+1 for ascending order and -1 for descending order.
+Example:
+javascript
+Copy code
+db.users.createIndex({ age: 1 });  // Creates an index on the "age" field in ascending order.
+Creating a Compound Index:
+javascript
+Copy code
+db.collection.createIndex({ field1: 1, field2: -1 });
+This creates an index that sorts field1 in ascending order and field2 in descending order.
+Example:
+javascript
+Copy code
+db.users.createIndex({ age: 1, name: -1 }); // Compound index on "age" and "name".
+Creating a Text Index:
+javascript
+Copy code
+db.articles.createIndex({ content: "text" });
+Enables text search on the content field.
+Creating a Hashed Index:
+javascript
+Copy code
+db.users.createIndex({ user_id: "hashed" });
+2. Listing Indexes
+To see which indexes exist on a collection, use the getIndexes() method.
+
+Example:
+javascript
+Copy code
+db.users.getIndexes();
+This will return an array of all indexes on the users collection, including their field and type.
+
+3. Dropping an Index
+Indexes can be dropped using the dropIndex() method by specifying the index name.
+
+Syntax:
+javascript
+Copy code
+db.collection.dropIndex("index_name");
+Example:
+javascript
+Copy code
+db.users.dropIndex("age_1");  // Drops the index on the "age" field.
+Dropping All Indexes:
+You can also drop all indexes on a collection except for the default _id index with:
+
+javascript
+Copy code
+db.collection.dropIndexes();
+Example of Index Operations in Node.js:
+javascript
+Copy code
+const { MongoClient } = require('mongodb');
+
+async function indexOperations() {
+  const uri = 'mongodb://localhost:27017'; // Replace with your MongoDB URI
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const db = client.db('testdb');
+    const usersCollection = db.collection('users');
+
+    // 1. Create an index on "age"
+    await usersCollection.createIndex({ age: 1 });
+
+    // 2. Create a compound index on "age" and "name"
+    await usersCollection.createIndex({ age: 1, name: -1 });
+
+    // 3. List all indexes
+    const indexes = await usersCollection.getIndexes();
+    console.log('Indexes:', indexes);
+
+    // 4. Drop the index on "age"
+    await usersCollection.dropIndex('age_1');
+
+    // 5. Drop all indexes (except _id)
+    await usersCollection.dropIndexes();
+
+  } finally {
+    await client.close();
+  }
+}
+
+indexOperations().catch(console.error);
+Important Notes:
+The default _id index cannot be dropped.
+Compound indexes should only be created if queries will use both fields. Otherwise, a single field index might be more efficient.
+When using text indexes, MongoDB automatically updates the index as the content of the fields changes.
+Summary:
+Indexes speed up query performance but slow down write operations and consume storage.
+MongoDB provides several types of indexes, like single field, compound, text, and hashed indexes, each suited to different types of queries.
+Use createIndex() to create an index, getIndexes() to list existing indexes, and dropIndex() or dropIndexes() to remove indexes.
+
+
+
+
+
+You said:
+while doing any query can i use .explain in mongo db
+
+Yes, in MongoDB, you can use the .explain() method to get detailed information about how MongoDB executes a query. This can be incredibly useful for understanding query performance, identifying when an index is used, and optimizing queries.
+
+What is .explain()?
+The .explain() method provides an execution plan, which helps you understand:
+
+Whether MongoDB is using an index for the query.
+How many documents are being scanned (either via index scan or full collection scan).
+The performance of the query.
+If MongoDB is using a covered query (where all fields are found in the index without needing to retrieve documents from the collection).
+Syntax of .explain():
+You can append .explain() to any query operation, like find(), aggregate(), update(), delete(), etc.
+
+javascript
+Copy code
+db.collection.find(query).explain();
+You can also pass a verbosity mode to .explain():
+
+"queryPlanner": (default) Provides general query plan information.
+"executionStats": Provides statistics of the execution after the query is run.
+"allPlansExecution": Provides details about the execution of all query plans, including rejected plans.
+Example Usage:
+Basic Example:
+
+Let's assume you're running a find() query on the users collection:
+javascript
+Copy code
+db.users.find({ age: { $gt: 25 } }).explain();
+This returns the query execution plan for the query { age: { $gt: 25 } }.
+
+Using executionStats Verbosity:
+
+This provides additional details, such as the number of documents examined, execution time, and whether the index is used.
+javascript
+Copy code
+db.users.find({ age: { $gt: 25 } }).explain("executionStats");
+With an Index:
+
+If you have an index on the age field, .explain() will show you that MongoDB is using the index and provide stats on how efficient the index usage is.
+javascript
+Copy code
+db.users.find({ age: { $gt: 25 } }).explain("executionStats");
+Output (simplified):
+
+json
+Copy code
+{
+  "queryPlanner": {
+    "winningPlan": {
+      "stage": "IXSCAN",        // Index scan is being used
+      "keyPattern": { "age": 1 }  // Shows index on the "age" field
+    }
+  },
+  "executionStats": {
+    "nReturned": 100,           // Documents returned by the query
+    "executionTimeMillis": 12,  // Time taken to execute the query
+    "totalKeysExamined": 150,   // Index keys examined
+    "totalDocsExamined": 100    // Documents examined
+  }
+}
+Verbosity Modes:
+"queryPlanner" (default):
+
+Provides the query plan that MongoDB’s query planner uses to execute the query. This is the default mode if no verbosity is specified.
+javascript
+Copy code
+db.collection.find({ field: "value" }).explain("queryPlanner");
+"executionStats":
+
+Provides the actual statistics of the query execution, including time taken and documents scanned.
+javascript
+Copy code
+db.collection.find({ field: "value" }).explain("executionStats");
+"allPlansExecution":
+
+Shows the query planner’s evaluation of all candidate plans, including those that were rejected.
+javascript
+Copy code
+db.collection.find({ field: "value" }).explain("allPlansExecution");
+Example with Update Operation:
+You can also use .explain() with an update operation to see how MongoDB will execute the update.
+
+javascript
+Copy code
+db.collection.update(
+  { age: { $gt: 25 } },
+  { $set: { status: "active" } }
+).explain("executionStats");
+Example with Aggregation Pipeline:
+Similarly, .explain() works with aggregation pipelines:
+
+javascript
+Copy code
+db.users.aggregate([
+  { $match: { age: { $gt: 25 } } },
+  { $group: { _id: "$city", total: { $sum: 1 } } }
+]).explain("executionStats");
+Why Use .explain()?
+Optimize Queries: Helps you understand if a query is using an index or performing a collection scan.
+Identify Performance Bottlenecks: You can identify why a query is slow (e.g., it’s not using an index).
+Plan Query Optimization: Based on the execution plan, you can create indexes or refactor queries to improve performance.
+Summary:
+.explain() gives insights into how MongoDB processes and executes queries.
+You can use .explain() on most queries like find, aggregate, update, and delete.
+Verbosity modes ("queryPlanner", "executionStats", "allPlansExecution") provide varying levels of detail.
+
+
+db.find({},{email:1,name:1})
+
+
+{
+    id:
+    inv:{
+        delhi:10,
+        gugraon:100
+    }
+}
+
+{"inv.delhi":1}
+
+aggration pipelines
+
+
+Basic Agggreator
+$match --> filter out the documents {name:'vikas'}
+$group:
+
+
+// i want to know the price of sales in delhi 
+// stage 1 -> filter out the products state:'u.p';
+//stage 1 --> stage 2 (group wise city)
+// order {
+    price:
+    state:u.p,
+    city:bairely
+}
+order {
+    price:
+    state:u.p,
+    city:z
+}
+order {
+    price:
+    state:m.p,
+    city:x
+}
+
+wanted total earning on pizza of size medium
+
+stage 1 --> filter out the medium size pizza
+
+db.order.agggregate([
+    {$match:{size:"medium}},
+    {}
+])
+
+
+db.orders.aggregate( [
+   {
+      $match: { size: "medium" }
+   },
+   {
+      $group: { _id: "$name", totalOrderValue: { $sum: {$multiply:["$price","$quantity"]} } }
+   },
+   {
+    $sort:{totalOrderValue:-1}
+   }
+] );

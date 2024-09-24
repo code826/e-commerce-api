@@ -425,3 +425,41 @@ add large
 size:["s","m","l"];
 
 .updateOne({_id:'123'},{$set:{size:size}});
+
+ 
+ what is the issue .
+
+ what is the solutions
+
+ orm and odm 
+
+ mongoose 
+install 
+connect to mongo db 
+
+schema 
+ types 
+ validation 
+
+models 
+ crud operations
+
+ find({},{$sort:[''price:1]})
+
+ find({})
+find({},{$sort})
+
+ find().sort().limit()
+
+query = .find();
+
+if(sort){
+  qury.sort()
+}
+query.exec();
+
+
+let user = user.find({id:dhffjkdf})
+user.fullName = user.firstName + USER.lastName
+
+let fullName = user.firstName+user.lastName;
