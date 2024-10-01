@@ -4,6 +4,7 @@ import validator from "validator";
 import ProductModel from "./product.model.js";
 import { ApplicationError } from "../../applicationError.js";
 import ProductRepository from "./product.repository.js";
+import productModel from "./product.model.js";
 
 export default class ProductController {
   constructor() {
@@ -11,6 +12,7 @@ export default class ProductController {
   }
   async getAllProducts(req, res) {
     this.repository.getAll();
+    throw new ApplicationError("test");
     // try {
     //   let products = ProductModel1.getAllProducts();
     //   return res.status(200).json({
@@ -90,7 +92,7 @@ export default class ProductController {
   async addProduct(req, res) {
     try {
       console.log("body", req.body);
-      const { name, describtion, category, price, imageUrl, sizes } = req.body;
+      let { name, describtion, category, price, imageUrl, sizes } = req.body;
       var errorMssg = "";
       //validate the data
 
@@ -124,6 +126,7 @@ export default class ProductController {
           message: errorMssg,
         });
       }
+      let categories = category.split(",");
 
       //TODO replace with schema statics
       // if (!ProductModel.isCatgeoryValid(category)) {
@@ -153,7 +156,7 @@ export default class ProductController {
       let obj = {
         name: name,
         describtion: describtion,
-        category: category,
+        categories: categories,
         price: price,
         imageUrl: imageUrl,
         sizes: sizes,
@@ -244,6 +247,7 @@ export default class ProductController {
           message: "Rating is not valid It is Whole Number from 0 to 10",
         });
       }
+      // in the last part
 
       let resp = await this.repository.rateProduct(userId, productId, rating);
       if (!resp) {

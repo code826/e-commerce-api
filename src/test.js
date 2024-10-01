@@ -1,6 +1,7 @@
 import { ApplicationError } from "./applicationError.js";
 import { connectToMongDB, getDatabase, getSession } from "./config/mongodb.js";
 import { connectToMongoDBFromMongoose } from "./config/mongoose.js";
+import catgeoryModel from "./resources/category/category.model.js";
 import productModel from "./resources/product/product.model.js";
 
 import ProductRepository from "./resources/product/product.repository.js";
@@ -14,12 +15,12 @@ import {
 async function init() {
   try {
     await connectToMongoDBFromMongoose();
-    let data = {
-      name: "test_product_mongoose_update_1",
-      price: 10,
-    };
+    // let data = await productModel.findById("66e30b9fc7d66aa1ed647df8");
+    // data.price = 20;
+    // await data.save();
 
-    deleteOperation("66f2f218692e6c3ace73b59c");
+    //mongoose document , js object , json document
+    //insertOperation(data);
   } catch (error) {
     console.log("err", error);
   }
@@ -28,7 +29,7 @@ async function init() {
 init();
 
 async function insertOperation(data) {
-  let product = await productModel.create(data);
+  let product = await catgeoryModel.create(data);
   console.log("operation success", product);
 }
 

@@ -462,4 +462,19 @@ query.exec();
 let user = user.find({id:dhffjkdf})
 user.fullName = user.firstName + USER.lastName
 
+user.fees = //admin 
+
+if !admin 
+ projection({feeStrcuture::0)})
+get the data 
+
 let fullName = user.firstName+user.lastName;
+
+
+await User.
+  findOne({ name: 'Val' }).
+  populate({
+    path: 'friends',
+    // Get friends of friends - populate the 'friends' array for every friend
+    populate: { path: 'friends' }
+  });

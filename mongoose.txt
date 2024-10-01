@@ -69,7 +69,8 @@ Copy code
 age: { type: Number, min: 18 }
 Boolean
 For true/false values.
-
+// "2024-10-10" -->
+// Date.now
 javascript
 Copy code
 isActive: { type: Boolean, default: false }
@@ -116,3 +117,87 @@ javascript
 Copy code
 attributes: { type: Map, of: String }
 These are the core data types that you can use to define fields in a Mongoose schema.
+
+
+relationsip 
+
+post --> comment : []
+
+comment --> post --> 
+
+post : {
+    _id:1
+    title:'new story',
+
+    comments:[1,2,3
+
+        {
+            email:@gmail.com,
+            time:2024-10-13,
+            name:vishal-1
+        },
+         {
+            email:@yahoo.com,
+            time:2024-10-13,
+            name:vishal-1
+        },
+         {
+            email:@hoooo.com,
+            time:2024-10-13,
+            name:vishal-2,
+            surnam:singh
+        },
+        ,
+     ]
+}
+
+comments :[
+     {
+            id:1
+            email:@gmail.com,
+            time:2024-10-13,
+            name:vishal-1,
+            post_id:1
+        },
+         {
+            id:2
+            email:@yahoo.com,
+            time:2024-11-13,
+            name:vikas,
+            post_id:2
+        }
+]
+
+productSchema.pre('save', async function (next) {
+  try {
+    // Example of async operation (e.g., checking something in the database)
+    const existingProduct = await Product.findOne({ name: this.name });
+    if (existingProduct) {
+      throw new Error('Product with this name already exists!');
+    }
+    
+    next();
+  } catch (err) {
+    // Pass error to next() to abort save
+    next(e
+
+
+// you want to add rating of a product 
+// product and rating has one to many relation 
+{
+    userId:,
+    productId:
+    star:
+}
+var a = 10;
+
+
+// create a document of rating ratingModel
+// that id  i will store on product 
+// product 
+// user 
+
+{
+    userId:ObjectId,
+    ref:'user'
+}

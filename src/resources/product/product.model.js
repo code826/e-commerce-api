@@ -18,10 +18,9 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
-  category: {
-    type: String,
-    enum: categories,
-    default: "category_a",
+  category: String,
+  ratings: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "rating" }],
   },
   sizes: {
     type: [String],

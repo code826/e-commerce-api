@@ -3,6 +3,7 @@ import express from "express";
 import productRouter from "./src/resources/product/product.router.js";
 import userRouter from "./src/resources/user/user.router.js";
 import cartRouter from "./src/resources/cart/cart.router.js";
+import likeRouter from "./src/resources/likes/like.router.js";
 
 import basicAuthorizer from "./src/middlewares/basicAuthorizer.js";
 import jwtAuth from "./src/middlewares/jwtTokenAuthorization.js";
@@ -25,15 +26,22 @@ server.use(express.json()); //content-type: application/json req.body
 //   logger.info("req-body".JSON.stringfy(req.body));
 //   next();
 // });
+
+server.get("/api/test", (req, res) => {
+  throw new ApplicationError("test", 200);
+});
+
 server.use("/api/product", productRouter);
 server.use("/api/user", userRouter);
 server.use("/api/cart", jwtAuth, cartRouter);
+server.use("/api/like", likeRouter);
 
 server.use((err, req, res, next) => {
-  console.log("error", err);
+  console.log("error-index", err);
   //err --> Error  ,ApplicationError
   //Application error (.code,message);
   if (err instanceof ApplicationError) {
+    console.log("error coms here");
     return res.status(err.code).json({
       success: false,
       message: err.message,
@@ -43,12 +51,6 @@ server.use((err, req, res, next) => {
   res.status(503).json({
     success: false,
     message: "Something went wrong",
-  });
-});
-server.get("/api/test", jwtAuth, (req, res) => {
-  return res.status(200).json({
-    success: true,
-    data: "all-good",
   });
 });
 

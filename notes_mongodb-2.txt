@@ -97,3 +97,29 @@ client.connect()
     .then(runTransaction)
     .catch(console.error)
     .finally(() => client.close());
+
+
+In MongoDB, the populate method is typically used in Mongoose to handle references between collections, creating relationships similar to SQL's foreign keys. However, populate itself doesn't enforce any restrictions like preventing deletion of a referenced document (as SQL would with foreign key constraints). If you delete a referenced document in MongoDB, the relationship will break, but it won’t stop you from performing the delete.
+
+To mimic SQL-like behavior where a referenced document can't be deleted while it's in use, you would have to handle this manually. One common approach is to:
+
+Use Mongoose Middleware (pre or post hooks): For example, you could add a pre('remove') hook to check whether a document is being referenced by any other document before allowing the delete operation.
+
+Custom Logic in Your Code: Before performing a delete operation, you can check whether the document is referenced by querying other collections.
+
+Here's a basic idea using a pre hook to check references before deletion:
+
+javascript
+Copy code
+// Assuming a Post and User model where a post references a user
+PostSchema.pre('remove', async function (next) {
+  const user = await User.findById(this.user);  // Check reference
+  if (user) {
+    // Prevent delete if the user is still associated with this post
+    return next(new Error('This post is referenced by a user.'));
+  }
+  next();
+});
+In this way, you can implement custom logic similar to SQL constraints but MongoDB doesn't enforce it out-of-the-box with populate.
+
+
