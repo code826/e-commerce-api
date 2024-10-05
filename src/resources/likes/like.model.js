@@ -7,6 +7,8 @@ import ratingModel from "../rating/rating.model.js";
 // {
 //     _id:
 //     entity_id :
+//post_id:123
+//post_id:123 = entity_id ,docModel = 'post' islike =1
 // }
 const docModels = ["product", "rating"];
 const LikeSchema = new mongoose.Schema(

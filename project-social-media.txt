@@ -1,0 +1,112 @@
+//Social Media (backend)
+ //rest api 
+ (node js)
+ //express --> framework
+ //database --> mongodb
+ //ORM --> mongoose
+
+
+// reset --password
+// reset-password --> email --> otp has been sent please
+//
+//generate an otp 
+ {
+    email:""
+ }
+ 100000 999999
+ //verify that email 
+  // otp generation
+  // random Number ( Math.)
+  // 
+  //send this to mail
+ // models 
+   // user 
+        {
+            _id : ,
+            name:,
+            email:,
+            password:,
+            gender:
+            posts:[],
+            token_auth:[{},{}],
+
+
+
+        }
+
+        // signup 
+        // signin
+        // get user details for id 
+        // get all user 
+        // logout 
+        // logout from al devices
+   // post 
+        {
+            name:'',
+            comments:[],
+            media:'',
+            user_id:'',
+
+        }
+        .populate('comment')
+   // like 
+   // comment 
+   {
+    content:'',
+    user_id:'',// login
+    post_id:'',
+
+   }
+   //get a commment 
+
+//toggle like --> like unlike 
+{
+    is_like: 0,
+    entity_id:
+    refPath:'post'
+}
+collection 
+ token_user 
+
+ [
+    {
+        userId:1,
+        token:12124126,
+        is_active:0,
+    },
+    {
+        userId:1,
+        token:235323,
+        is_active:0   
+    }
+ ]
+
+ //logout --> token --> 
+ //requesr --> jwt tokem verification --> token is_active
+ //
+
+ otp {
+
+    user_id:'', // unique
+    code :'35356363',
+    expiry_time:'',
+    hash: dgfugdfjkgdfhjdgfhj,
+
+
+ }
+
+uuid()_u_id_bbdjsgdhjdsfj;
+ // generate otp --. email --> updateOrInsert --> sent an mail 
+ // verify otp --> email , otp --> { user_id: , otp : expiry_time}
+
+ // otp --> generation --> url 
+ // person has verified the otp 
+ http://localhost:8000/api/otp/reset-password?hash=skjgfjkgdfjkhgdjfgdhjgdhjfcvdhj
+ {
+    new password:
+    new_password:
+ }
+
+ // hash os present in otp if yes --> 
+ // you will match fetch that user id and update the password 
+ // 

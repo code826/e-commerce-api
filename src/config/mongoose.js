@@ -3,6 +3,9 @@ import ratingModel from "../resources/rating/rating.model.js";
 
 //connection
 const url = "mongodb://localhost:27017/test_cn";
+// const url =
+//   "mongodb+srv://codeforfun1997:<password>@cluster0.dhdxy.mongodb.net/test_cn?retryWrites=true&w=majority&appName=Cluster0";
+
 export async function connectToMongoDBFromMongoose() {
   try {
     await mongoose.connect(url, {

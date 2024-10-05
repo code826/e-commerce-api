@@ -33,6 +33,7 @@ const jwtAuth = async (req, res, next) => {
         });
       }
     }
+    // is token for this user is marked is-active
   } else {
     return res.status(401).json({
       success: false,
