@@ -12,7 +12,7 @@ import { ApplicationError } from "./src/applicationError.js";
 import { connectToMongDB } from "./src/config/mongodb.js";
 import { connectToMongoDBFromMongoose } from "./src/config/mongoose.js";
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 const server = express();
 
@@ -27,7 +27,10 @@ server.use(express.json()); //content-type: application/json req.body
 //   next();
 // });
 
-server.get("/api/test", (req, res) => {
+server.get("/", (req, res) => {
+  return res.send("<h1>welcome to the ecommerce api </h1>");
+});
+server.get("/api/test/error", (req, res) => {
   throw new ApplicationError("test", 200);
 });
 

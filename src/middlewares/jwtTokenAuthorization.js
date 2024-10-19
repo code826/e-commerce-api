@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../resources/user/user.model.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const jwtAuth = async (req, res, next) => {
   //read from the headers
@@ -10,7 +12,7 @@ const jwtAuth = async (req, res, next) => {
 
     if (authType == "Bearer") {
       //decode the token
-      let secretKey = "sgdjhsdghsd##$";
+      let secretKey = process.env.SECRET_KEY;
       try {
         let payloadData = jwt.verify(token, secretKey);
         // it is the same user

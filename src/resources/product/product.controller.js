@@ -11,8 +11,6 @@ export default class ProductController {
     this.repository = new ProductRepository();
   }
   async getAllProducts(req, res) {
-    this.repository.getAll();
-    throw new ApplicationError("test");
     // try {
     //   let products = ProductModel1.getAllProducts();
     //   return res.status(200).json({

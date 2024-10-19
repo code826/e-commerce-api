@@ -1,6 +1,8 @@
 import validator from "validator";
 import UserModel from "./user.model.js";
 import dotenv from "dotenv";
+dotenv.config();
+
 import jwt from "jsonwebtoken";
 import { hashPassword, verifyPassword } from "../../utils.js";
 
@@ -86,7 +88,7 @@ export default class UserController {
         email: user.email,
         name: user.name,
       };
-      let secretKey = "sgdjhsdghsd##$";
+      let secretKey = process.env.SECRET_KEY;
 
       let token = jwt.sign(payloadData, secretKey, { expiresIn: 60 * 30 });
 

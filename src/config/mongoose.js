@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import ratingModel from "../resources/rating/rating.model.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 //connection
-const url = "mongodb://localhost:27017/test_cn";
-// const url =
-//   "mongodb+srv://codeforfun1997:<password>@cluster0.dhdxy.mongodb.net/test_cn?retryWrites=true&w=majority&appName=Cluster0";
+console.log("env", process.env.MONGODB_URL);
+const url = process.env.MONGODB_URL;
 
 export async function connectToMongoDBFromMongoose() {
   try {
@@ -16,6 +16,7 @@ export async function connectToMongoDBFromMongoose() {
     loadSampleData();
     console.log("sample data loaded");
   } catch (err) {
+    console.log("err", err);
     throw new Error("Connect to DB server from mongoose failed");
   }
 }
